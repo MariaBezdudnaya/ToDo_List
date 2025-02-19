@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To_Do_List</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>To Do List</h1>
+
+    <!-- Форма для создания задачи -->
+    <form action="/todos" method="POST">
+      <input type="text" name="title" placeholder="Title" required>
+      <textarea name="description" placeholder="Description"></textarea>
+      <button type="submit">Add To Do</button>
+    </form>
+
+    <!-- Список всех задач -->
+    <ul>
+      <% todos.forEach(todo => { %>
+        <li>
+          <form action="/todos/update/<%= todo._id %>?_method=PUT" method="POST">
+            <input type="text" name="title" value="<%= todo.title %>" required>
+            <textarea name="description"><%= todo.description %></textarea> 
+            <input type="checkbox" name="completed" <%= todo.completed? 'checked' : '' %> >
+            <button type="submit">Update</button>
+          </form>
+          <form action="/todos/delete/<%= todo._id %>?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+</body>
+</html>
