@@ -4,16 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>To_Do_List</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <div class="container">
     <h1>To Do List</h1>
-
     <!-- Форма для создания задачи -->
     <form action="/todos" method="POST">
-      <input type="text" name="title" placeholder="Title" required>
-      <textarea name="description" placeholder="Description"></textarea>
+      <input type="text" id="title" name="title" placeholder="Title" value="<%= typeof title !== 'undefined' ? title : '' %>">
+      <% if (locals.errors && errors) { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === 'title' && !error.todoId) { %>
+            <p class="error-message"><%= error.msg %></p>
+          <% } %>
+        <% }) %>
+      <% } %>
+
+      <textarea id="description" name="description" placeholder="Description"><%= typeof description !== 'undefined' ? description : '' %></textarea>
+      <% if (locals.errors && errors) { %>
+        <% errors.forEach(error => { %>
+          <% if (error.path === 'description' && !error.todoId) { %>
+            <p class="error-message"><%= error.msg %></p>
+          <% } %>
+        <% }) %>
+      <% } %>
       <button type="submit">Add To Do</button>
     </form>
 
@@ -21,17 +35,35 @@
     <ul>
       <% todos.forEach(todo => { %>
         <li>
-          <form action="/todos/update/<%= todo._id %>?_method=PUT" method="POST">
-            <input type="text" name="title" value="<%= todo.title %>" required>
-            <textarea name="description"><%= todo.description %></textarea> 
-            <input type="checkbox" name="completed" <%= todo.completed? 'checked' : '' %> >
+          <form class="update-form" action="/todos/update/<%= todo._id %>?_method=PUT" method="POST">
+            <input type="text" name="title" value="<%= todoToUpdate && todoToUpdate._id.toString() === todo._id.toString() ? updatedTitle : todo.title %>">
+            <% if (locals.errors && errors) { %>
+              <% errors.forEach(error => { %>
+                <% if (error.path === 'title' && error.todoId === todo._id.toString()) { %>
+                  <p class="error-message"><%= error.msg %></p>
+                <% } %>
+              <% }) %>
+            <% } %>
+
+            <textarea name="description"><%= todoToUpdate && todoToUpdate._id.toString() === todo._id.toString() ? updatedDescription : todo.description %></textarea>
+            <% if (locals.errors && errors) { %>
+              <% errors.forEach(error => { %>
+                <% if (error.path === 'description' && error.todoId === todo._id.toString()) { %>
+                  <p class="error-message"><%= error.msg %></p>
+                <% } %>
+              <% }) %>
+            <% } %>
+
+            <input type="checkbox" name="completed" <%= todo.completed ? 'checked' : '' %>>
+            
             <button type="submit">Update</button>
           </form>
+
           <form action="/todos/delete/<%= todo._id %>?_method=DELETE" method="POST">
-            <button type="submit">Delete</button>
+              <button type="submit">Delete</button>
           </form>
         </li>
-      <% }); %>
+    <% }); %>
     </ul>
   </div>
 </body>

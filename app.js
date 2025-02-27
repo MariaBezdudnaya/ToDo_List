@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const path = require("path"); // библиотека, которая позволит создать абсолютный путь к папке public
+const path = require("path"); // модуль Node.js, который позволит создать абсолютный путь к папке public
 const methodOverride = require("method-override");
 
 const app = express();
@@ -15,8 +15,9 @@ mongoose
   })
   .catch((err) => {
     console.error("MongoDB connection error", err);
-  });
-  
+  }
+);
+
 app.set('view engine', 'ejs'); // настройки для отображения и шаблонизатор
 
 app.use(bodyParser.urlencoded({ extended: true })); // сообщаем Express использовать body-parser
