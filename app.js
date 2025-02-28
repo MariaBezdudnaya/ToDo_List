@@ -1,4 +1,4 @@
-require ('dotenv').config();
+require ("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -9,9 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB (из документации)
-const mongoUri = process.env.MONGODB_URI
-mongoose
-  .connect(mongoUri)
+const mongoUri = process.env.MONGODB_URI || "";
+mongoose.connect(mongoUri)
   .then(() => {
     console.log("Connected to MongoDB");
   })
