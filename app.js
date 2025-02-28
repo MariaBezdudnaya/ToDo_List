@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB (из документации)
-const mongoUri = process.env.MONGODB_URI || ""
+const mongoUri = process.env.MONGODB_URI
 mongoose
   .connect(mongoUri)
   .then(() => {
