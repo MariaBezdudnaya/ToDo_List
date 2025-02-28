@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js",
-    "lint": "eslint.",
-    "fix": "eslint. --fix",
-    "format": "prettier --write.",
-    "precommit": "lint-staged",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
