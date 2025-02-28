@@ -21,6 +21,7 @@ mongoose.connect(mongoUri)
 );
 
 app.set('view engine', 'ejs'); // настройки для отображения и шаблонизатор
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.urlencoded({ extended: true })); // сообщаем Express использовать body-parser
 
