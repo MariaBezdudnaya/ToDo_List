@@ -1,3 +1,4 @@
+require ('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -5,16 +6,18 @@ const path = require("path"); // модуль Node.js, который позво
 const methodOverride = require("method-override");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB (из документации)
+const mongoUri = process.env.MONGODB_URI || ""
 mongoose
-  .connect("mongodb://127.0.0.1:27017/todo-list")
+  .connect(mongoUri)
   .then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((err) => {
     console.error("MongoDB connection error", err);
+    process.exit(1); // завершение процесса при ошибке подключения к MongoDB
   }
 );
 
